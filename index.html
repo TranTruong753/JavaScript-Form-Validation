@@ -8,8 +8,7 @@
 </head>
 <body>
     <div class="main">
-
-        <form action="" method="POST" class="form" id="form-1">
+        <form action="" method="POST" class="form" id="form-1" autocomplete="off" >
           <h3 class="heading">Thành viên đăng ký</h3>
           <p class="desc">Cùng nhau học lập trình ❤️</p>
       
@@ -40,13 +39,31 @@
           </div>
       
           <button class="form-submit">Đăng ký</button>
-        </form>
-      
+        </form>  
     </div>
     <script src="validation.js"></script> 
     <script>
-        Validator();
-      
+        Validator({
+            form: '#form-1',
+            formGroupSelector: '.form-group',
+            errorSelector: '.form-message',
+            rules:[
+                Validator.isRequired('#fullname', 'Vui lòng nhập tên đầy đủ của bạn!'),
+                Validator.isRequired('#email'),
+                Validator.isEmail('#email'),
+                Validator.isConfirmed('#password_confirmation', function () {
+                return document.querySelector('#form-1 #password').value;
+            }, 'Mật khẩu nhập lại không chính xác'),
+                Validator.minLength('#password', 6),
+           
+            ],
+            onSubmit: function (data) {
+            // Call API
+            console.log(data);
+            }
+
+        });
+     
 
     </script>
 </body>
